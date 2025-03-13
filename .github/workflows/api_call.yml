@@ -17,7 +17,7 @@ jobs:
         run: |
           TIMESTAMP=$(date +'%Y-%m-%d_%H-%M-%S')
           mkdir -p api_responses
-          curl -s "https://api.coindesk.com/v1/bpi/currentprice.json" -o api_responses/bitcoin_price_$TIMESTAMP.json
+          curl -s "https://api.thecatapi.com/v1/images/search" -o api_responses/cat_image_$TIMESTAMP.json
 
       - name: Commit and push API response
         env:
