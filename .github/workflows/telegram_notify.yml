@@ -1,0 +1,20 @@
+name: Telegram Notification
+
+on:
+  workflow_run:
+    workflows: ["Monitor Web Status", "Backup Logs from VPS", "API Call"]
+    types:
+      - completed
+
+jobs:
+  send_notification:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Telegram Message
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          MESSAGE="🚀 GitHub Actions Ejecutado!\n🏷️ Workflow: ${{ github.workflow }}\n✅ Estado: ${{ github.event.workflow_run.conclusion }}\n📅 Fecha: $(date +'%Y-%m-%d %H:%M:%S')"
+          curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" -d chat_id="$TELEGRAM_CHAT_ID" -d text="$MESSAGE"
+

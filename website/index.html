@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Monitorización de Servidores</title>
+</head>
+<body>
+    <h1>Estado del Servidor</h1>
+    <pre id="logs"></pre>
+
+    <script>
+        fetch('https://raw.githubusercontent.com/TU_USUARIO/TU_REPO/main/web_status.log')
+        .then(response => response.text())
+        .then(data => document.getElementById('logs').innerText = data)
+        .catch(error => console.error("Error cargando los logs:", error));
+    </script>
+</body>
+</html>
