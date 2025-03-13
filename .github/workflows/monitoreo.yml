@@ -2,8 +2,8 @@ name: Monitor Web Status
 
 on:
   schedule:
-    - cron: '*/1 * * * *'  # Se ejecuta cada 1 minuto
-  workflow_dispatch:  # Permite ejecutarlo manualmente
+    - cron: '*/1 * * * *'
+  workflow_dispatch:
 
 jobs:
   check_website:
