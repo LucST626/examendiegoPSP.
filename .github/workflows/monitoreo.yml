@@ -15,7 +15,7 @@ jobs:
 
       - name: Ensure web_status.log exists
         run: |
-          touch web_status.log  # Asegura que el archivo exista antes de escribir en él
+          touch web_status.log
 
       - name: Check website status
         run: |
@@ -24,8 +24,11 @@ jobs:
           echo "$(date +'%Y-%m-%d %H:%M:%S') - $STATUS" >> web_status.log
 
       - name: Commit and push results
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config --global user.name 'github-actions'
-          git config --global user.email 'github-actions@github.com'
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
           git add web_status.log || echo "No hay cambios en web_status.log"
-          git diff --cached --quiet || (git commit -m "Actualización de estado web" && git push)
+          git diff --cached --quiet || (git commit -m "Actualización de estado web" && git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git main)
+
