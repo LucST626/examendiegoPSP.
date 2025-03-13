@@ -1,0 +1,28 @@
+name: Monitor Web Status
+
+on:
+  schedule:
+    - cron: '*/1 * * * *'
+  workflow_dispatch:  
+
+jobs:
+  check_website:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Check website status
+        run: |
+          URL="https://example.com"
+          STATUS=$(curl -o /dev/null -s -w "%{http_code}" "$URL")
+          echo "$(date +'%Y-%m-%d %H:%M:%S') - $STATUS" >> web_status.log
+
+      - name: Commit and push results
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git add web_status.log
+          git commit -m "Actualización de estado web"
+          git push
