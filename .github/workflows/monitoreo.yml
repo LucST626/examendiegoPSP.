@@ -2,8 +2,8 @@ name: Monitor Web Status
 
 on:
   schedule:
-    - cron: '*/1 * * * *'
-  workflow_dispatch:  
+    - cron: '*/1 * * * *'  # Se ejecuta cada 1 minuto
+  workflow_dispatch:  # Permite ejecutarlo manualmente
 
 jobs:
   check_website:
@@ -12,6 +12,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Ensure web_status.log exists
+        run: |
+          touch web_status.log  # Asegura que el archivo exista antes de escribir en él
 
       - name: Check website status
         run: |
@@ -23,6 +27,5 @@ jobs:
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
-          git add web_status.log
-          git commit -m "Actualización de estado web"
-          git push
+          git add web_status.log || echo "No hay cambios en web_status.log"
+          git diff --cached --quiet || (git commit -m "Actualización de estado web" && git push)
