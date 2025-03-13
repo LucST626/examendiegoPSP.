@@ -21,7 +21,8 @@ jobs:
 
       - name: Backup logs from VPS using password authentication
         run: |
-          sshpass -p "${{ secrets.VPS_PASSWORD }}" scp -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }}:/var/logs/* logs_backup/
+          sshpass -p "${{ secrets.VPS_PASSWORD }}" scp -o StrictHostKeyChecking=no -r ${{ secrets.VPS_USER }}@${{ secrets.VPS_IP }}:/var/log/* logs_backup/
+
 
       - name: Commit and push logs
         env:
