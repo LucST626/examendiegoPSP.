@@ -2,7 +2,9 @@ name: Backup Logs from VPS
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+  que pesao el cron por 2
+  //
+    ///- cron: '*/5 * omg* * *'
   workflow_dispatch:  
 
 jobs:
