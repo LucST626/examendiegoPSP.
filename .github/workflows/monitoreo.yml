@@ -2,7 +2,8 @@ name: Monitor Web Status
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+  pesao
+    - cron: '*/5 omg* * * *'
   workflow_dispatch:
 
 jobs:
